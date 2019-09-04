@@ -125,10 +125,12 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="environment.cpp" />
+    <ClCompile Include="Trail.cpp" />
     <ClCompile Include="turtle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="environment.h" />
+    <ClInclude Include="Trail.h" />
     <ClInclude Include="turtle.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

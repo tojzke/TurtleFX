@@ -8,19 +8,21 @@ class App
 public:
 	
 	App();
+	~App();
 
 	void getEvent(sf::Event& event);
 	void getInput();
 
 	bool isActive();
-	void draw();
-
+	void updateWindow();
+	void wow();
 
 	void shutdown();
 
 private:
 	sf::RenderWindow*		pWindow;
-	bool isRunning;
+	
+	bool					isRunning;
 
 	static const uint32_t	WIDTH;
 	static const uint32_t	HEIGHT;

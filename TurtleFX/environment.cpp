@@ -1,9 +1,13 @@
+#include <iostream>
+#include <string>
+#include <SFML/System.hpp>
+
 #include "SFML/Graphics.hpp"
 #include "environment.h"
 #include "turtle.h"
 
 const uint32_t App::HEIGHT = 800;
-const uint32_t App::WIDTH = 640;
+const uint32_t App::WIDTH = 800;
 
 const std::string App::TITLE = "TurtleFX";
 
@@ -15,26 +19,39 @@ App::App()
 
 	float radius = 20.0f;
 
-	pTurtle = new Turtle(static_cast<float>(WIDTH) / 2 + radius / 2,
-						 static_cast<float>(HEIGHT) / 2 + radius / 2,
+	pTurtle = new Turtle(static_cast<float>(WIDTH) / 2 + radius,
+						 static_cast<float>(HEIGHT) / 2 + radius,
 						 radius);
 
 
 	isRunning = true;
 }
 
-void App::draw()
+App::~App()
+{
+	delete pWindow;
+	delete pTurtle;
+}
+
+void App::updateWindow()
 {
 	pWindow->clear();
-	pWindow->draw(*(pTurtle->getShape()));
+	auto lines = pTurtle->getTrail()->getData();
+	pWindow->draw(&lines[0], lines.getVertexCount(), sf::Lines);
+	if (pTurtle->isVisible()) {
+		pWindow->draw(*(pTurtle->getShape()));
+		pWindow->draw(pTurtle->getSprite());
+	}
 	pWindow->display();
 }
+
 
 void App::shutdown()
 {
 	isRunning = false;
 	pWindow->close();
-	delete pWindow;
+	this->~App();
+	exit(EXIT_SUCCESS);
 }
 
 void App::getEvent(sf::Event& event)
@@ -42,22 +59,49 @@ void App::getEvent(sf::Event& event)
 	pWindow->pollEvent(event);
 }
 
+void App::wow()
+{
+	pTurtle->drawStar();
+}
+
 void App::getInput()
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
-		auto line = pTurtle->move(1.0f);
-		sf::Vertex temp_line[2];
-		temp_line[0] = line[0];
-		temp_line[1] = line[1];
-		pWindow->draw(temp_line, 2, sf::Lines);
-	}
+	while (isRunning) {
+		std::string input;
+		std::getline(std::cin, input);
 
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-		pTurtle->rotateLeft(2.0f);
-	}
+		if (input.find("toggle draw") != std::string::npos) {
+			pTurtle->toggleDraw();
+		}
 
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-		pTurtle->rotateRight(2.0f);
+		else if (input.find("quit") != std::string::npos) {
+			isRunning = false;
+			this->shutdown();
+		}
+
+		else if (input.find("toggle visible") != std::string::npos) {
+			pTurtle->toggleVisible();
+		}
+
+		else {
+			size_t pos = input.find(" ");
+			if (pos == std::string::npos) {
+				std::cout << "No such command!\n" <<
+					"Try following commands:\n" <<
+					"forward <value>\n" <<
+					"right <angle>\n" <<
+					"left <angle>\n";
+			}
+			else if (input.substr(0, pos) == "forward") {
+				pTurtle->move(std::atoi(input.substr(pos).c_str()));
+			}
+			else if (input.substr(0, pos) == "right") {
+				pTurtle->rotateRight(std::atof(input.substr(pos).c_str()));
+			}
+			else if (input.substr(0, pos) == "left") {
+				pTurtle->rotateLeft(std::atof(input.substr(pos).c_str()));
+			}
+		}
 	}
 }
 

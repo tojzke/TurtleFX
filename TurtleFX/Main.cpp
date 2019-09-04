@@ -1,9 +1,14 @@
 #include "environment.h"
+#include <iostream>
 
 int main()
 {
 	App app;
 
+
+	/*sf::Thread inputThread(&App::getInput, &app);
+	inputThread.launch();
+	*/
 	while (app.isActive())
 	{
 		sf::Event e;
@@ -13,10 +18,13 @@ int main()
 			break;
 		}
 		else if (e.type == sf::Event::KeyPressed) {
-			app.getInput();
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up)) {
+				app.wow();
+			}
 		}
+		
 
-		app.draw();
+		app.updateWindow();
 
 	}
 

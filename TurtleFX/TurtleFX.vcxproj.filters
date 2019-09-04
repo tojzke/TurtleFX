@@ -24,12 +24,18 @@
     <ClCompile Include="turtle.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Trail.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="environment.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="turtle.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Trail.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
