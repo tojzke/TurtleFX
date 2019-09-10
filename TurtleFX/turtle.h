@@ -11,13 +11,17 @@ public:
 
 	~Turtle();
 
+
 	void setPosition(float x, float y);
 	void move(int movement);
 	void rotateRight(float angle);
 	void rotateLeft(float angle);
-	void toggleDraw();
 
 	void drawStar();
+	void drawSquareBg();
+
+	bool isDrawable();
+	void toggleDraw();
 
 	bool isVisible();
 	void toggleVisible();
@@ -26,7 +30,9 @@ public:
 	sf::CircleShape* getShape();
 	Trail*			 getTrail();
 	sf::Sprite&		 getSprite();
+	std::string		 getInfo();
 
+	void			 clearTrail();
 
 private:
 	

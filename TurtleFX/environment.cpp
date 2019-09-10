@@ -6,12 +6,14 @@
 #include "environment.h"
 #include "turtle.h"
 
-const uint32_t App::HEIGHT = 800;
-const uint32_t App::WIDTH = 800;
+const uint32_t App::HEIGHT = 1000;
+const uint32_t App::WIDTH = 1000;
 
 const std::string App::TITLE = "TurtleFX";
 
-App::App()
+
+App::App():
+	m_mutex()
 {
 	
 	pWindow = new sf::RenderWindow(sf::VideoMode(WIDTH, HEIGHT), TITLE);
@@ -35,14 +37,18 @@ App::~App()
 
 void App::updateWindow()
 {
+	m_mutex.lock();
 	pWindow->clear();
 	auto lines = pTurtle->getTrail()->getData();
-	pWindow->draw(&lines[0], lines.getVertexCount(), sf::Lines);
+	if (lines.getVertexCount() != 0) {
+		pWindow->draw(&lines[0], lines.getVertexCount(), sf::Lines);
+	}
 	if (pTurtle->isVisible()) {
 		pWindow->draw(*(pTurtle->getShape()));
 		pWindow->draw(pTurtle->getSprite());
 	}
 	pWindow->display();
+	m_mutex.unlock();
 }
 
 
@@ -66,6 +72,19 @@ void App::wow()
 
 void App::getInput()
 {
+
+	static const char* usageMessage =
+		"Usage:\n\
+		help\n\
+		forward <pixels>\n\
+		right <angle>\n\
+		left <angle>\n\
+		info\n\
+		toggle draw\n\
+		toggle visible\n\
+		draw start\n\
+		draw square\n"; 
+
 	while (isRunning) {
 		std::string input;
 		std::getline(std::cin, input);
@@ -83,14 +102,42 @@ void App::getInput()
 			pTurtle->toggleVisible();
 		}
 
+		else if (input.find("draw star") != std::string::npos) {
+			pTurtle->drawStar();
+		}
+
+		else if (input.find("draw square") != std::string::npos) {
+			pTurtle->drawSquareBg();
+		}
+
+		else if (input.find("info") != std::string::npos) {
+			std::string info = pTurtle->getInfo();
+
+			std::cout << info;
+		}
+
+		else if (input.find("help") != std::string::npos) {
+			std::cout << usageMessage;
+		}
+
+		else if (input.find("reset") != std::string::npos) {
+
+			float radius = 20.0f;
+
+			pTurtle->setPosition(static_cast<float>(WIDTH) / 2 + radius,
+				static_cast<float>(HEIGHT) / 2 + radius);
+		}
+
+		else if (input == "clear") {
+			m_mutex.lock();
+			pTurtle->clearTrail();
+			m_mutex.unlock();
+		}
+
 		else {
 			size_t pos = input.find(" ");
 			if (pos == std::string::npos) {
-				std::cout << "No such command!\n" <<
-					"Try following commands:\n" <<
-					"forward <value>\n" <<
-					"right <angle>\n" <<
-					"left <angle>\n";
+				std::cout << usageMessage;
 			}
 			else if (input.substr(0, pos) == "forward") {
 				pTurtle->move(std::atoi(input.substr(pos).c_str()));

@@ -17,6 +17,7 @@ Turtle::Turtle(float x = 0.0f, float y = 0.0f, float radius = 0.0f) :
 	m_pShape = new sf::CircleShape(m_radius, 1);
 	m_pShape->setPosition(m_x, m_y);
 	m_pShape->setOrigin(m_radius, m_radius);
+	m_pShape->setRotation(m_angle);
 
 	sf::Image image;
 	image.loadFromFile("lil_turtl.png");
@@ -44,10 +45,19 @@ Turtle::~Turtle()
 	delete m_pTrail;
 }
 
+
 void Turtle::setPosition(float x, float y)
 {
 	m_x = x;
 	m_y = y;
+
+	m_pShape->setPosition(m_x, m_y);
+	m_sprite.setPosition(m_x, m_y);
+	
+	m_angle = 270.0f;
+	m_pShape->setRotation(m_angle);
+	m_sprite.setRotation(0);
+
 }
 
 void Turtle::move(int movement)
@@ -57,8 +67,8 @@ void Turtle::move(int movement)
 	float ny = m_y + movement * sin(m_angle / 360.0f * 2.0f * M_PI);
 
 	if (m_isDrawing) {
-		m_pTrail->addPoint(sf::Vertex(sf::Vector2f(m_x, m_y), sf::Color::White));
-		m_pTrail->addPoint(sf::Vertex(sf::Vector2f(nx, ny), sf::Color::White));
+		m_pTrail->addPoint(sf::Vertex(sf::Vector2f(m_x, m_y)));
+		m_pTrail->addPoint(sf::Vertex(sf::Vector2f(nx, ny)));
 
 	}
 	m_sprite.move(nx - m_x, ny - m_y);
@@ -77,6 +87,11 @@ void Turtle::rotateLeft(float angle)
 	m_sprite.rotate(-angle);
 }
 
+bool Turtle::isDrawable()
+{
+	return m_isDrawing;
+}
+
 void Turtle::toggleDraw()
 {
 	m_isDrawing = !m_isDrawing;
@@ -91,6 +106,24 @@ void Turtle::drawStar()
 		this->rotateLeft(170);
 	}
 
+}
+
+void Turtle::drawSquareBg()
+{
+	int size = 0;
+
+	for (int i = 0; i < 350; ++i)
+	{
+		if (i % 2 == 0)
+			this->getTrail()->setColor(sf::Color::Blue);
+		else
+			this->getTrail()->setColor(sf::Color::Red);
+
+		this->move(size);
+		this->rotateRight(91);
+		size += 4;
+
+	}
 }
 
 bool Turtle::isVisible()
@@ -120,6 +153,28 @@ sf::CircleShape * Turtle::getShape()
 sf::Sprite& Turtle::getSprite()
 {
 	return m_sprite;
+}
+
+std::string Turtle::getInfo()
+{
+	std::string info;
+
+	auto pos = getSprite().getPosition();
+
+	info += "Position: x=" + std::to_string(static_cast<int>(pos.x)) + " y=" + std::to_string(static_cast<int>(pos.y)) + '\n';
+
+	info += "Drawing:";
+	if (isDrawable())
+		info += "yes\n";
+	else
+		info += "no\n";
+
+	return info;
+}
+
+void Turtle::clearTrail()
+{
+	getTrail()->getData().clear();
 }
 
 Trail * Turtle::getTrail()

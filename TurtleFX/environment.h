@@ -30,5 +30,5 @@ private:
 
 	Turtle*					pTurtle;
 	
-
+	sf::Mutex				m_mutex;
 };
