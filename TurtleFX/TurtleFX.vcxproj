@@ -18,6 +18,17 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\environment.cpp" />
+    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Trail.cpp" />
+    <ClCompile Include="src\turtle.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\environment.h" />
+    <ClInclude Include="include\Trail.h" />
+    <ClInclude Include="include\turtle.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{BDAA492A-F8BE-4DE9-902F-95D284D6E93A}</ProjectGuid>
@@ -76,7 +87,7 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\Dev\Cpp\TurtleFX\TurtleFX\Dependecies\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Dev\Cpp\TurtleFX\TurtleFX;E:\Dev\Cpp\TurtleFX\TurtleFX\src;E:\Dev\Cpp\TurtleFX\TurtleFX\include;E:\Dev\Cpp\TurtleFX\TurtleFX\Dependecies\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>E:\Dev\Cpp\TurtleFX\TurtleFX\Dependecies\SFML-2.5.1\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -99,7 +110,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>E:\Dev\Cpp\TurtleFX\TurtleFX\Dependecies\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Dev\Cpp\TurtleFX\TurtleFX;E:\Dev\Cpp\TurtleFX\TurtleFX\src;E:\Dev\Cpp\TurtleFX\TurtleFX\include;E:\Dev\Cpp\TurtleFX\TurtleFX\Dependecies\SFML-2.5.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -122,17 +133,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="environment.cpp" />
-    <ClCompile Include="Trail.cpp" />
-    <ClCompile Include="turtle.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="environment.h" />
-    <ClInclude Include="Trail.h" />
-    <ClInclude Include="turtle.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

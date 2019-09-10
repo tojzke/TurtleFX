@@ -126,6 +126,7 @@ void App::getInput()
 
 			pTurtle->setPosition(static_cast<float>(WIDTH) / 2 + radius,
 				static_cast<float>(HEIGHT) / 2 + radius);
+			pTurtle->getTrail()->setColor(sf::Color::White);
 		}
 
 		else if (input == "clear") {
