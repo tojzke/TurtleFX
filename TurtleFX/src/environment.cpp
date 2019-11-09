@@ -21,8 +21,8 @@ App::App():
 
 	float radius = 20.0f;
 
-	pTurtle = new Turtle(static_cast<float>(WIDTH) / 2 + radius,
-						 static_cast<float>(HEIGHT) / 2 + radius,
+	pTurtle = new Turtle(static_cast<float>(WIDTH) / 2.0f + radius,
+						 static_cast<float>(HEIGHT) / 2.0f + radius,
 						 radius);
 
 
@@ -75,15 +75,18 @@ void App::getInput()
 
 	static const char* usageMessage =
 		"Usage:\n\
-		help\n\
-		forward <pixels>\n\
-		right <angle>\n\
-		left <angle>\n\
-		info\n\
-		toggle draw\n\
-		toggle visible\n\
-		draw start\n\
-		draw square\n"; 
+	help -- show usage\n\
+	forward <pixels> -- force turtle to move forward\n\
+	right <angle> -- rotate turtle to the right on entered angle (in degrees)\n\
+	left <angle> --  same as right <angle> but to the left\n\
+	reset -- move turtle to starting position\n\
+	clear -- clear screan from what you drew\n\
+	info -- print current turtle state\n\
+	toggle draw -- turn on/off turtle drawing\n\
+	toggle visible -- turn on/off turtle visibility\n\
+	draw star -- draw star template\n\
+	draw magic -- draw something special :o\n\
+	quit -- end art session\n"; 
 
 	while (isRunning) {
 		std::string input;
@@ -106,14 +109,12 @@ void App::getInput()
 			pTurtle->drawStar();
 		}
 
-		else if (input.find("draw square") != std::string::npos) {
+		else if (input.find("draw magic") != std::string::npos) {
 			pTurtle->drawSquareBg();
 		}
 
 		else if (input.find("info") != std::string::npos) {
-			std::string info = pTurtle->getInfo();
-
-			std::cout << info;
+			std::cout << pTurtle->getInfo() << '\n';
 		}
 
 		else if (input.find("help") != std::string::npos) {

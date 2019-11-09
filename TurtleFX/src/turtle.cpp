@@ -165,9 +165,9 @@ std::string Turtle::getInfo()
 
 	info += "Drawing:";
 	if (isDrawable())
-		info += "yes\n";
+		info += "yes";
 	else
-		info += "no\n";
+		info += "no";
 
 	return info;
 }
