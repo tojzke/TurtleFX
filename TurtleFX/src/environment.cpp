@@ -79,14 +79,15 @@ void App::getInput()
 	forward <pixels> -- force turtle to move forward\n\
 	right <angle> -- rotate turtle to the right on entered angle (in degrees)\n\
 	left <angle> --  same as right <angle> but to the left\n\
+	color <red | blue | white> -- set drawing color\n\
 	reset -- move turtle to starting position\n\
-	clear -- clear screan from what you drew\n\
+	clear -- clear screen from what you drew\n\
 	info -- print current turtle state\n\
 	toggle draw -- turn on/off turtle drawing\n\
 	toggle visible -- turn on/off turtle visibility\n\
 	draw star -- draw star template\n\
 	draw magic -- draw something special :o\n\
-	quit -- end art session\n"; 
+	quit -- end art session\n\n"; 
 
 	while (isRunning) {
 		std::string input;
@@ -141,6 +142,17 @@ void App::getInput()
 			if (pos == std::string::npos) {
 				std::cout << usageMessage;
 			}
+
+			else if (input.substr(0, pos) == "color") {
+				++pos;
+				if (input.substr(pos) == "red")
+					pTurtle->getTrail()->setColor(sf::Color::Red);
+				if (input.substr(pos) == "blue")
+					pTurtle->getTrail()->setColor(sf::Color::Blue);
+				if (input.substr(pos) == "white")
+					pTurtle->getTrail()->setColor(sf::Color::White);
+			}
+
 			else if (input.substr(0, pos) == "forward") {
 				pTurtle->move(std::atoi(input.substr(pos).c_str()));
 			}
