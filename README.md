@@ -11,7 +11,8 @@ Just open TurtleFX.sln file and run it under VS 2017
 
 Enter commands in the console
 
-![image](https://user-images.githubusercontent.com/32550323/68531884-391d0600-0328-11ea-8e5b-c44ec9466d6c.png)
+![image](https://user-images.githubusercontent.com/32550323/68552557-5685c900-0429-11ea-824c-05eeda3c6405.png)
+
 
 To see what happens
 
